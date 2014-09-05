@@ -41,9 +41,9 @@ module WitnessProtection
       end
 
       def __encryption_salt__
-        unless salt = ENV["ENCRYPTION_SALT"]
-          fail "Can't find `ENCRYPTION_SALT' in environment."
-        end
+        salt = ENV["ENCRYPTION_SALT"]
+        salt ||= Hash[ ENV.map {|k,v| [k.upcase,v] } ]["ENCRYPTION_SALT"]
+        fail "Can't find `ENCRYPTION_SALT' in environment." unless salt
         return salt
       end
 
